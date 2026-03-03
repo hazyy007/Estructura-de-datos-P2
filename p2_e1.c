@@ -71,7 +71,7 @@ int main (int argc, char **argv) {
         }
     }
 
-    /*Menu interaticvo*/
+    /*Menu interactivo*/
     while (option != 2)
     {
         option = show_player_menu(history);

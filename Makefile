@@ -16,6 +16,8 @@ music.o: music.c music.h types.h
 
 radio.o: radio.c radio.h music.h
 	$(CC) $(CFLAGS) -c radio.c
+exe: p2_e1
+	./p2_e1 radio.txt
 
 clean:
 	rm -f *.o p2_e1
