@@ -1,9 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -g
-# LDFLAGS indica que busque librerías en el directorio actual (.)
-LDFLAGS = -L. 
-# LDLIBS indica que use la librería 'stack' (libstack.a)
+
+LDFLAGS = -L.
+
 LDLIBS = -lstack
+
+all: p2_e1 p2_e2a
+
 
 p2_e1: p2_e1.o music.o radio.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
@@ -11,13 +14,25 @@ p2_e1: p2_e1.o music.o radio.o
 p2_e1.o: p2_e1.c stack.h music.h radio.h
 	$(CC) $(CFLAGS) -c p2_e1.c
 
+
+p2_e2a: p2_e2a.o music.o radio.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
+p2_e2a.o: p2_e2a.c stack.h music.h radio.h
+	$(CC) $(CFLAGS) -c p2_e2a.c
+
 music.o: music.c music.h types.h
 	$(CC) $(CFLAGS) -c music.c
 
 radio.o: radio.c radio.h music.h
 	$(CC) $(CFLAGS) -c radio.c
-exe: p2_e1
+
+
+exe1: p2_e1
 	./p2_e1 radio.txt
 
+exe2a: p2_e2a
+	./p2_e2a playlist1.txt playlist2.txt
+
 clean:
-	rm -f *.o p2_e1
+	rm -f *.o p2_e1 p2_e2a
