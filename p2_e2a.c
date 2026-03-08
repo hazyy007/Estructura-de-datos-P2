@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "radio.h"
 #include "stack.h"
+#include "music.h"
 
 Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout) {
     void *e1, *e2;
@@ -87,7 +89,7 @@ int main(int argc, char **argv)
     printf("\nPlaylist 1:\n");
     stack_print(stdout, s2, music_plain_print);
     /*Combinamos las pilas*/
-    if (mergeStack(s1, s2, sout) == OK)
+    if (mergeStacks(s1, s2, sout) == OK)
     {
         printf("\nPlaylist combined:\n");
         stack_print(stdout, sout, music_plain_print);

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,8 +6,7 @@
 #include "stack.h"
 #include "music.h"
 
-int compare_artist(const void *e1, const void *e2){
-
+int compare_artist(const void *e1, const void *e2) {
     const Music *m1 = NULL;
     const Music *m2 = NULL;
 
@@ -18,34 +16,35 @@ int compare_artist(const void *e1, const void *e2){
     return strcmp(music_getArtist(m1), music_getArtist(m2));
 }
 
-Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout, int (*cmp)(const void *, const void *)){
-    void *e1, *e2;
+Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout,
+                   int (*cmp)(const void *, const void *)) {
+    void *e1 = NULL, *e2 = NULL;
     Stack *ps = NULL;
-    if (!sin1 || !sin2 || !sout) return ERROR;
+
+    if (!sin1 || !sin2 || !sout || !cmp) {
+        return ERROR;
+    }
 
     while (!stack_isEmpty(sin1) && !stack_isEmpty(sin2)) {
-
         e1 = stack_top(sin1);
         e2 = stack_top(sin2);
 
-        /*Ordeno alfabeticamente por artista*/
-        if(cmp(e1, e2) > 0) {
+        if (cmp(e1, e2) > 0) {
             stack_push(sout, stack_pop(sin1));
-        }
-        else{
+        } else {
             stack_push(sout, stack_pop(sin2));
         }
-
     }
 
-    /* Vaciar la pila que haya quedado con elementos [cite: 120, 128] */
     ps = stack_isEmpty(sin1) ? sin2 : sin1;
+
     while (!stack_isEmpty(ps)) {
         stack_push(sout, stack_pop(ps));
     }
 
     return OK;
 }
+
 int main(int argc, char **argv) {
     Radio *r1 = NULL, *r2 = NULL;
     Stack *s1 = NULL, *s2 = NULL, *sout = NULL;
@@ -53,6 +52,7 @@ int main(int argc, char **argv) {
     int i;
 
     if (argc < 3) {
+        fprintf(stderr, "Uso: %s playlistA.txt playlistB.txt\n", argv[0]);
         return EXIT_FAILURE;
     }
 
@@ -75,8 +75,8 @@ int main(int argc, char **argv) {
     f2 = fopen(argv[2], "r");
 
     if (!f1 || !f2) {
-        fclose(f1);
-        fclose(f2);
+        if (f1) fclose(f1);
+        if (f2) fclose(f2);
         radio_free(r1);
         radio_free(r2);
         stack_free(s1);
@@ -99,7 +99,14 @@ int main(int argc, char **argv) {
         stack_push(s2, radio_getMusicIndex(r2, i));
     }
 
+    printf("Playlist 0:\n");
+    stack_print(stdout, s1, music_plain_print);
+
+    printf("\nPlaylist 1:\n");
+    stack_print(stdout, s2, music_plain_print);
+
     if (mergeStacks(s1, s2, sout, compare_artist) == ERROR) {
+        fprintf(stderr, "Error al combinar las pilas.\n");
         radio_free(r1);
         radio_free(r2);
         stack_free(s1);
@@ -108,7 +115,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    printf("Playlist combined:\n");
+    printf("\nPlaylist combined:\n");
     stack_print(stdout, sout, music_plain_print);
 
     radio_free(r1);
