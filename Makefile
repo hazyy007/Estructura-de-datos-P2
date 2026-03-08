@@ -14,7 +14,6 @@ p2_e1: p2_e1.o music.o radio.o
 p2_e1.o: p2_e1.c stack.h music.h radio.h
 	$(CC) $(CFLAGS) -c p2_e1.c
 
-
 p2_e2a: p2_e2a.o music.o radio.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 

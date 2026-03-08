@@ -3,7 +3,7 @@
 #include "radio.h"
 #include "stack.h"
 
-Status mergeStack(Stack *sin1, Stack *sin2, Stack *sout) {
+Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout) {
     void *e1, *e2;
     Stack *ps = NULL;
     if (!sin1 || !sin2 || !sout) return ERROR;
@@ -50,6 +50,11 @@ int main(int argc, char **argv)
         stack_free(sout);
         return EXIT_FAILURE;
     }
+    /*Compruebo que los archivos se inician*/
+    if(argc < 3){
+        fprintf(stderr, "Error al iniciar");
+        return EXIT_FAILURE;
+    }
     f1 = fopen(argv[1], "r");
     f2 = fopen(argv[2], "r");
     if (!f1 || !f2)
@@ -75,7 +80,7 @@ int main(int argc, char **argv)
         stack_push(s2, radio_getMusicIndex(r2, i));
     }
 
-    /* 5. Mostrar pilas iniciales antes de combinar*/
+    /* Mostrar pilas iniciales antes de combinar*/
     printf("Playlist 0:\n");
     stack_print(stdout, s1, music_plain_print);
     
