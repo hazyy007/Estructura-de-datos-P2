@@ -26,12 +26,18 @@ music.o: music.c music.h types.h
 radio.o: radio.c radio.h music.h
 	$(CC) $(CFLAGS) -c radio.c
 
+p2_e2b.o: p2_e2a.c stack.h music.h radio.h
+	$(CC) $(CFLAGS) -c p2_e2b.c
+
 
 exe1: p2_e1
 	./p2_e1 radio.txt
 
 exe2a: p2_e2a
 	./p2_e2a playlist1.txt playlist2.txt
+
+exe2b: p2_e2b
+	./p2_e2b playlist1.txt playlist2.txt
 
 clean:
 	rm -f *.o p2_e1 p2_e2a

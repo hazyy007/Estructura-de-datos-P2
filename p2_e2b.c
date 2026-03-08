@@ -29,7 +29,6 @@ Status mergeStacks(Stack *sin1, Stack *sin2, Stack *sout, int (*cmp)(const void 
         e2 = stack_top(sin2);
 
         /*Ordeno alfabeticamente por artista*/
-
         if(cmp(e1, e2) > 0) {
             stack_push(sout, stack_pop(sin1));
         }
