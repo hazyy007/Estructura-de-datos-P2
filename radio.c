@@ -11,6 +11,7 @@
 #define MAX_MSC 4096
 #include "radio.h"
 #include <string.h>
+#include "stack.h"
 struct _Radio
 {
     Music *songs[MAX_MSC];            /*Array para canciones*/
@@ -77,6 +78,7 @@ Status radio_newMusic(Radio *r, char *desc) {
         return ERROR;
     }
 
+    music_setIndex(new_music, r->num_music); /* Asignar el índice actual */
     /* Insertar al final del contador actual */
     r->songs[r->num_music] = new_music;
     r->num_music++; 
@@ -303,4 +305,29 @@ Music *radio_getMusicIndex(const Radio *r, int index)
     }
 
     return r->songs[index];
+}
+
+Status radio_depthSearch(Radio *r, long from_id, long to_id)
+{
+    int i, u;
+    Music *m_origin = NULL, *current = NULL, *adj = NULL;
+    Stack *s = NULL;
+    Bool found = FALSE;
+
+    if (!r)
+    {
+        return ERROR;
+    }
+    
+
+    /*Recorremos las canciones de la radio*/
+    for (i = 0; i < r->num_music; i++) {
+        if (music_getId(r->songs[i]) == from_id) 
+        {
+            m_origin = r->songs[i];
+        }
+    }
+
+    s = stack_init();
+
 }

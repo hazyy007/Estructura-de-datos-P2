@@ -238,6 +238,26 @@ int music_cmp (const void * m1, const void * m2);
 void * music_copy (const void * src);
 
 
+/**
+ * @brief Modifies the index of a given Music
+ *
+ * @param m Music pointer
+ * @param index New Music index, must be equal or greater than 0
+ *
+ * @return Returns OK or ERROR in case of error
+
+ */
+Status music_setIndex(Music *m, const int index);
+
+/**
+ * @brief Gets the Music index.
+ *
+ * @param m Music pointer
+ *
+ * @return  Returns the index of the given Music, or -1 in case of error.
+ */
+int music_getIndex(const Music *m);
+
 /** 
  * @brief Prints in pf the data of a Music.
  * 

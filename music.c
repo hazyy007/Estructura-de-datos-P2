@@ -291,6 +291,24 @@ void *music_copy(const void *src)
   return copy;
 }
 
+Status music_setIndex(Music *m, const int index)
+{
+  if (!m || index < 0)
+  {
+    return ERROR;
+  }
+  m->index = index;
+  return OK;
+}
+
+int music_getIndex(const Music *m)
+{
+  if (!m)
+  {
+    return -1;
+  }
+  return m->index;
+}
 
 int music_plain_print(FILE *pf, const void *m)
 {
@@ -301,7 +319,7 @@ int music_plain_print(FILE *pf, const void *m)
 
   aux = (Music *)m;
 
-  return fprintf(pf, "[%ld, %s, %s, %u, %d]", aux->id, aux->title, aux->artist, aux->duration, aux->state);
+  return fprintf(pf, "[%ld, %s, %s, %u, %d, %d]", aux->id, aux->title, aux->artist, aux->duration, aux->state, aux->index);
 }
 
 /**  Remaining functions of music.h to be implemented here **/
