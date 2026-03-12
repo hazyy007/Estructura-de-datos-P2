@@ -27,6 +27,7 @@ struct _Music
   char artist[STR_LENGTH];
   unsigned short duration;
   State state;
+  int index;  
 };
 /* END [Music] */
 
@@ -41,6 +42,7 @@ Music *music_init()
   strcpy(m->artist, "");
   m->duration = 0;
   m->state = NOT_LISTENED;
+  m->index = -1;
 
   return m;
 }
@@ -288,6 +290,7 @@ void *music_copy(const void *src)
 
   return copy;
 }
+
 
 int music_plain_print(FILE *pf, const void *m)
 {
