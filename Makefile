@@ -4,7 +4,7 @@ CFLAGS = -Wall -ansi -pedantic -g
 LDFLAGS = -L.
 LDLIBS = -lstack
 
-all: p2_e1 p2_e2a p2_e2b
+all: p2_e1 p2_e2a p2_e2b p2_e3
 
 p2_e1: p2_e1.o music.o radio.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
@@ -24,6 +24,12 @@ p2_e2b: p2_e2b.o music.o radio.o
 p2_e2b.o: p2_e2b.c stack.h music.h radio.h
 	$(CC) $(CFLAGS) -c p2_e2b.c
 
+p2_e3: p2_e3.o music.o radio.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
+p2_e3.o: p2_e3.c stack.h music.h radio.h
+	$(CC) $(CFLAGS) -c p2_e3.c
+
 music.o: music.c music.h types.h
 	$(CC) $(CFLAGS) -c music.c
 
@@ -39,5 +45,8 @@ exe2a: p2_e2a
 exe2b: p2_e2b
 	./p2_e2b playlist1.txt playlist2.txt
 
+exe3: p2_e3
+	./p2_e3 radio.txt 1 4
+
 clean:
-	rm -f *.o p2_e1 p2_e2a p2_e2b
+	rm -f *.o p2_e1 p2_e2a p2_e2b p2_e3
